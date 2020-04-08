@@ -21,6 +21,23 @@ namespace ClinkedIn.Controllers
             _repository.AddClinker(clinkerToAdd);
             return Created($"Added Clinker {clinkerToAdd.Name}", clinkerToAdd);
         }
+
+        [HttpPost("{id}/services")]
+        public IActionResult AddService(int id, Service serviceToAdd)
+        {
+            var clinkerToUpdate = _repository.GetById(id);
+            if (!clinkerToUpdate.Services.Any(s => s.Title == serviceToAdd.Title))
+            {
+                _repository.AddClinkerService(id, serviceToAdd);
+            }
+            else
+            {
+                return BadRequest("Service already exists");
+            }
+
+            var updatedClinker = _repository.GetById(id);
+            return Ok(updatedClinker);
+        }
         
     }
 }

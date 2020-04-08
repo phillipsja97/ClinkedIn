@@ -8,5 +8,6 @@ namespace ClinkedIn.Models
     public class Service
     {
         public string Title { get; set; }
+        public string Cost { get; set; }
     }
 }

@@ -14,9 +14,17 @@ namespace ClinkedIn.DataAccess
                 Name = "Nathan",
                 Age = 33,
                 LockupReason = "Stealing TVs",
-                Interests = new List<string>{ "Coding", "Stealing TVs"}
+                Interests = new List<string>{ "Coding", "Stealing TVs"},
+                Services = new List<Service>{new Service { Title = "Shive Maker", Cost = "bar of soap"} }
             }
         };
+
+        public void AddClinkerService(int id, Service service)
+        {
+            _clinkers[id - 1].Services.Add(service);
+            // var clinkerToUpdate = _clinkers.(s => s.Id == id);
+
+        }
 
         public void AddClinker(Clinker clinker)
         {
@@ -24,5 +32,9 @@ namespace ClinkedIn.DataAccess
             _clinkers.Add(clinker);
         }
 
+        public Clinker GetById(int id)
+        {
+            return _clinkers.FirstOrDefault(c => c.Id == id);
+        }
     }
 }
