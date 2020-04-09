@@ -15,9 +15,7 @@ namespace ClinkedIn.DataAccess
                 Age = 33,
                 LockupReason = "Stealing TVs",
                 Interests = new List<string>{ "Coding", "Stealing TVs"},
-                Services = new List<Service>{new Service { Title = "Shive Maker", Cost = "bar of soap"} },
-                Friends = new List<Clinker>(),
-                Enemies = new List<Clinker>()
+                Services = new List<Service>{ new Service { Title = "Shive Maker", Cost = "bar of soap"} }
             }
         };
 
