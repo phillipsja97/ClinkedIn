@@ -46,5 +46,21 @@ namespace ClinkedIn.Controllers
             return Ok(interestedClinkers);
         }
         
+        [HttpPost("{id}/friends")]
+        public IActionResult AddFriend(int id, Clinker friendToAdd)
+        {
+            var clinkerToUpdate = _repository.GetById(id);
+            if (!clinkerToUpdate.Friends.Any(c => c.Name == friendToAdd.Name))
+            {
+                _repository.AddClinkerFriend(id, friendToAdd);
+            }
+            else
+            {
+                return BadRequest($"Already friends with {friendToAdd.Name}");
+            }
+
+            var updatedClinker = _repository.GetById(id);
+            return Ok(updatedClinker);
+        }
     }
 }

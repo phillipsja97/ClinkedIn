@@ -15,7 +15,7 @@ namespace ClinkedIn.DataAccess
                 Age = 33,
                 LockupReason = "Stealing TVs",
                 Interests = new List<string>{ "Coding", "Stealing TVs"},
-                Services = new List<Service>{new Service { Title = "Shive Maker", Cost = "bar of soap"} }
+                Services = new List<Service>{ new Service { Title = "Shive Maker", Cost = "bar of soap"} }
             }
         };
 
@@ -41,6 +41,11 @@ namespace ClinkedIn.DataAccess
         { 
             var matchingClinkers = _clinkers.Where(x => x.Interests.Contains(interest));
             return matchingClinkers.ToList();
+        }
+
+        public void AddClinkerFriend(int id, Clinker friendToAdd)
+        {
+            _clinkers[id - 1].Friends.Add(friendToAdd);
         }
     }
 }
