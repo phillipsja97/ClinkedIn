@@ -38,6 +38,13 @@ namespace ClinkedIn.Controllers
             var updatedClinker = _repository.GetById(id);
             return Ok(updatedClinker);
         }
+
+        [HttpGet("interests/{interest}")]
+        public IActionResult GetClinkersByInterest(string interest)
+        {
+            var interestedClinkers = _repository.GetClinkersByInterest(interest);
+            return Ok(interestedClinkers);
+        }
         
     }
 }
