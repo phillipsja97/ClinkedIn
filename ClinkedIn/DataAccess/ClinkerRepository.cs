@@ -47,5 +47,10 @@ namespace ClinkedIn.DataAccess
         {
             _clinkers[id - 1].Friends.Add(friendToAdd);
         }
+
+        public void AddClinkerEnemy(int id, Clinker enemyToAdd)
+        {
+            _clinkers[id - 1].Enemies.Add(enemyToAdd);
+        }
     }
 }

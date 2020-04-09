@@ -62,5 +62,22 @@ namespace ClinkedIn.Controllers
             var updatedClinker = _repository.GetById(id);
             return Ok(updatedClinker);
         }
+
+        [HttpPost("{id}/enemies")]
+        public IActionResult AddEnemies(int id, Clinker enemyToAdd)
+        {
+            var clinkerToUpdate = _repository.GetById(id);
+            if (!clinkerToUpdate.Enemies.Any(c => c.Name == enemyToAdd.Name))
+            {
+                _repository.AddClinkerEnemy(id, enemyToAdd);
+            }
+            else
+            {
+                return BadRequest($"Already enemies with {enemyToAdd.Name}.");
+            }
+
+            var updatedClinker = _repository.GetById(id);
+            return Ok(updatedClinker);
+        }
     }
 }
