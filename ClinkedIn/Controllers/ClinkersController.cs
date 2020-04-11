@@ -46,6 +46,21 @@ namespace ClinkedIn.Controllers
             return Ok(updatedClinker);
         }
 
+        [HttpDelete("{id}/services/{service}")]
+        public IActionResult DeleteAService(int id, string service)
+        {
+            var clinkerToDeleteService = _repository.GetById(id);
+            if (clinkerToDeleteService.Services.Any(s => s.Title  == service))
+            {
+                _repository.deleteService(id, service);
+            }
+            else
+            {
+                return BadRequest("That service doesn't exist");
+            }
+            return Ok("That service has been deleted");
+        }
+
         [HttpGet("{id}/friendsOfFriends")]
         public IActionResult GetFriendsOfFriends(int id)
         {
