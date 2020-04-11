@@ -114,6 +114,21 @@ namespace ClinkedIn.Controllers
             return Ok(updatedClinker);
         }
 
+        [HttpDelete("{id}/enemy/{enemy}")]
+        public IActionResult DeleteAnEnemy(int id, Clinker clinker)
+        {
+            var enemyToDelete = _repository.GetById(id);
+            if (enemyToDelete.Enemies.Any(c => c.Id == enemyToDelete.Id))
+            {
+                _repository.deleteEnemy(id, clinker);
+            }
+            else
+            {
+                return BadRequest("That enemy doesn't exist");
+            }
+            return Ok("That enemy has been deleted");
+        }
+
         [HttpGet("{id}/sentence")]
         public IActionResult ClinkerSentence(int id)
         {
