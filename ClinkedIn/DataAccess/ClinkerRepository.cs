@@ -35,6 +35,12 @@ namespace ClinkedIn.DataAccess
             }
         };
 
+        public List<Clinker> getAllClinkers()
+        {
+            var allClinkers = _clinkers;
+            return allClinkers;
+        }
+
         public void AddClinkerService(int id, Service service)
         {
             _clinkers[id - 1].Services.Add(service);
