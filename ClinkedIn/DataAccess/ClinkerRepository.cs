@@ -102,8 +102,14 @@ namespace ClinkedIn.DataAccess
 
         public void DeleteFriend(int id, int friendId)
         {
-             var friendToDelete = GetById(friendId);
+            var friendToDelete = GetById(friendId);
             _clinkers[id - 1].Friends.Remove(friendToDelete);
+        }
+
+        public void deleteEnemy(int id, int enemyId)
+        {
+            var enemyToDelete = GetById(enemyId);
+            _clinkers[id - 1].Enemies.Remove(enemyToDelete);
         }
     }
 }

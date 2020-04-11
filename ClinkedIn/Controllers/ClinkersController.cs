@@ -114,6 +114,22 @@ namespace ClinkedIn.Controllers
             return Ok(updatedClinker);
         }
 
+        [HttpDelete("{id}/enemy/{enemyId}")]
+        public IActionResult DeleteAnEnemy(int id, int enemyId)
+        {
+            var clinkerRemovingEnemy = _repository.GetById(id);
+            var enemyBeingRemoved = _repository.GetById(enemyId);
+            if (clinkerRemovingEnemy.Enemies.Contains(enemyBeingRemoved))
+            {
+                _repository.deleteEnemy(id, enemyId);
+            }
+            else
+            {
+                return BadRequest($"{enemyBeingRemoved.Name} couldn't be found in {clinkerRemovingEnemy.Name}'s enemy list.");
+            }
+            return Ok($"Removed {enemyBeingRemoved.Name} from {clinkerRemovingEnemy.Name}'s enemy list.");
+        }
+
         [HttpGet("{id}/sentence")]
         public IActionResult ClinkerSentence(int id)
         {
