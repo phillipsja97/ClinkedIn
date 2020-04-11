@@ -121,5 +121,26 @@ namespace ClinkedIn.Controllers
             var clinkerSentence = _repository.SentenceCountdown(id);
             return Ok(clinkerSentence);
         }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateClinker(int id, Clinker clinker)
+        {
+            var clinkerToUpdate = _repository.GetById(id);
+
+            if (clinkerToUpdate == null)
+            {
+                return NotFound("Clinker doesn't exist");
+            }
+
+            clinkerToUpdate.Name = clinker.Name;
+            clinkerToUpdate.Age = clinker.Age;
+            clinkerToUpdate.LockupReason = clinker.LockupReason;
+            clinkerToUpdate.Interests = clinker.Interests;
+            clinkerToUpdate.Services = clinker.Services;
+            clinkerToUpdate.Friends = clinker.Friends;
+            clinkerToUpdate.Enemies = clinker.Enemies;
+
+            return Ok(clinkerToUpdate);
+        }
     }
 }
