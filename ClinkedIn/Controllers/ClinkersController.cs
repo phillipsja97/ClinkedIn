@@ -78,7 +78,7 @@ namespace ClinkedIn.Controllers
             return Ok(interestedClinkers);
         }
         
-        [HttpPost("{id}/{friendToAddId}")]
+        [HttpPost("{id}/friends/{friendToAddId}")]
         public IActionResult AddFriend(int id, int friendToAddId)
         {
             var clinkerToGiveFriend = _repository.GetById(id);
@@ -96,7 +96,7 @@ namespace ClinkedIn.Controllers
             return Ok(updatedClinker);
         }
 
-        [HttpPost("{id}/{enemyToAddId}")]
+        [HttpPost("{id}/enemies/{enemyToAddId}")]
         public IActionResult AddEnemy(int id, int enemyToAddId)
         {
             var clinkerToGiveEnemy = _repository.GetById(id);
@@ -169,6 +169,22 @@ namespace ClinkedIn.Controllers
 
             _repository.deleteClinker(clinkerToDelete);
             return Ok($"That clinker has been deleted from the system.");
+        }
+
+        [HttpDelete("{id}/friends/{friendId}")]
+        public IActionResult DeleteAFriend(int id, int friendId)
+        {
+            var clinkerRemovingFriend = _repository.GetById(id);
+            var friendBeingRemoved = _repository.GetById(friendId);
+            if (clinkerRemovingFriend.Friends.Contains(friendBeingRemoved))
+            {
+                _repository.DeleteFriend(id, friendId);
+            }
+            else
+            {
+                return BadRequest($"{friendBeingRemoved.Name} couldn't be found in {clinkerRemovingFriend.Name}'s friends list.");
+            }
+            return Ok($"Removed {friendBeingRemoved.Name} from {clinkerRemovingFriend.Name}'s friends list.");
         }
     }
 }

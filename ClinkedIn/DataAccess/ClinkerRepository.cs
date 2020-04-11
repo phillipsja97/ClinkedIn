@@ -99,12 +99,5 @@ namespace ClinkedIn.DataAccess
             var serviceToDelete = selectedClinker.Services.Find(s => s.Title == service);
             _clinkers[id - 1].Services.Remove(serviceToDelete);
         }
-
-        public void deleteEnemy(int id, Clinker clinker)
-        {
-            var selectedClinker = GetById(id);
-            selectedClinker.Enemies.Find(s => s.Id == id);
-            _clinkers[id - 1].Enemies.Remove(clinker);
-        }
     }
 }
