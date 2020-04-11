@@ -18,7 +18,7 @@ namespace ClinkedIn.Controllers
         [HttpGet]
         public IActionResult GetAllClinkers()
         {
-            var allClinkers = _repository.getAllClinkers();
+            var allClinkers = _repository.GetAllClinkers();
             return Ok(allClinkers);
         }
                      
@@ -52,7 +52,7 @@ namespace ClinkedIn.Controllers
             var clinkerToDeleteService = _repository.GetById(id);
             if (clinkerToDeleteService.Services.Any(s => s.Title  == service))
             {
-                _repository.deleteService(id, service);
+                _repository.DeleteService(id, service);
             }
             else
             {
@@ -75,9 +75,28 @@ namespace ClinkedIn.Controllers
         public IActionResult GetClinkersByInterest(string interest)
         {
             var interestedClinkers = _repository.GetClinkersByInterest(interest);
+            if (interestedClinkers.Count() == 0)
+            {
+                return NotFound("No clinkers found with that interest.");
+            }
             return Ok(interestedClinkers);
         }
-        
+
+        [HttpDelete("{id}/interests/{interest}")]
+        public IActionResult DeleteAnInterest(int id, string interest)
+        {
+            var clinkerToDeleteInterest = _repository.GetById(id);
+            if (clinkerToDeleteInterest.Interests.Any(i => i == interest))
+            {
+                _repository.DeleteInterest(id, interest);
+            }
+            else
+            {
+                return NotFound("That interest doesn't exist");
+            }
+            return Ok("That interest has been deleted");
+        }
+
         [HttpPost("{id}/friends/{friendToAddId}")]
         public IActionResult AddFriend(int id, int friendToAddId)
         {
@@ -121,7 +140,7 @@ namespace ClinkedIn.Controllers
             var enemyBeingRemoved = _repository.GetById(enemyId);
             if (clinkerRemovingEnemy.Enemies.Contains(enemyBeingRemoved))
             {
-                _repository.deleteEnemy(id, enemyId);
+                _repository.DeleteEnemy(id, enemyId);
             }
             else
             {
@@ -168,7 +187,7 @@ namespace ClinkedIn.Controllers
                 return NotFound("Can't delete a clinker that doesn't exist.");
             }
 
-            _repository.deleteClinker(clinkerToDelete);
+            _repository.DeleteClinker(clinkerToDelete);
             return Ok($"That clinker has been deleted from the system.");
         }
 

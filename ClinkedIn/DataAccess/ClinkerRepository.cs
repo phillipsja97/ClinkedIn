@@ -32,13 +32,13 @@ namespace ClinkedIn.DataAccess
                 Name = "Jameka",
                 Age = 33,
                 LockupReason = "Bank Heist",
-                Interests = new List<string>{ "Robbin' Banks",},
+                Interests = new List<string>{ "Coding", "Robbin' Banks" },
                 Services = new List<Service>{ new Service { Title = "Chef", Cost = "ingredients"} },
                 Sentence = new DateTime(2025,10,04)
             }
         };
 
-        public List<Clinker> getAllClinkers()
+        public List<Clinker> GetAllClinkers()
         {
             var allClinkers = _clinkers;
             return allClinkers;
@@ -88,12 +88,12 @@ namespace ClinkedIn.DataAccess
             return string.Format($"{clinkerSentenced.Name} has {sentenceLeft.Days} Days Left In Sentence");
         }
 
-        public void deleteClinker(Clinker clinkerToDelete)
+        public void DeleteClinker(Clinker clinkerToDelete)
         {
-            var deletedClinker = _clinkers.Remove(clinkerToDelete);
+            _clinkers.Remove(clinkerToDelete);
         }
 
-        public void deleteService(int id, string service)
+        public void DeleteService(int id, string service)
         {
             var selectedClinker = GetById(id);
             var serviceToDelete = selectedClinker.Services.Find(s => s.Title == service);
@@ -106,10 +106,17 @@ namespace ClinkedIn.DataAccess
             _clinkers[id - 1].Friends.Remove(friendToDelete);
         }
 
-        public void deleteEnemy(int id, int enemyId)
+        public void DeleteEnemy(int id, int enemyId)
         {
             var enemyToDelete = GetById(enemyId);
             _clinkers[id - 1].Enemies.Remove(enemyToDelete);
+        }
+
+        public void DeleteInterest(int id, string interest)
+        {
+            var selectedClinker = GetById(id);
+            var interestToDelete = selectedClinker.Interests.Find(i => i == interest);
+            _clinkers[id - 1].Interests.Remove(interestToDelete);
         }
     }
 }
