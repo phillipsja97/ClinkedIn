@@ -87,5 +87,10 @@ namespace ClinkedIn.DataAccess
             TimeSpan sentenceLeft = daysLeft - startDate;
             return string.Format($"{clinkerSentenced.Name} has {sentenceLeft.Days} Days Left In Sentence");
         }
+
+        public void deleteClinker(Clinker clinkerToDelete)
+        {
+            var deletedClinker = _clinkers.Remove(clinkerToDelete);
+        }
     }
 }

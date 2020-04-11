@@ -98,5 +98,47 @@ namespace ClinkedIn.Controllers
             var updatedClinker = _repository.GetById(id);
             return Ok(updatedClinker);
         }
+
+        [HttpGet("{id}/sentence")]
+        public IActionResult ClinkerSentence(int id)
+        {
+            var clinkerSentence = _repository.SentenceCountdown(id);
+            return Ok(clinkerSentence);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateClinker(int id, Clinker clinker)
+        {
+            var clinkerToUpdate = _repository.GetById(id);
+
+            if (clinkerToUpdate == null)
+            {
+                return NotFound("Clinker doesn't exist");
+            }
+
+            clinkerToUpdate.Name = clinker.Name;
+            clinkerToUpdate.Age = clinker.Age;
+            clinkerToUpdate.LockupReason = clinker.LockupReason;
+            clinkerToUpdate.Interests = clinker.Interests;
+            clinkerToUpdate.Services = clinker.Services;
+            clinkerToUpdate.Friends = clinker.Friends;
+            clinkerToUpdate.Enemies = clinker.Enemies;
+
+            return Ok(clinkerToUpdate);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteClinker(int id)
+        {
+            var clinkerToDelete = _repository.GetById(id);
+
+            if (clinkerToDelete == null)
+            {
+                return NotFound("Can't delete a clinker that doesn't exist.");
+            }
+
+            _repository.deleteClinker(clinkerToDelete);
+            return Ok($"That clinker has been deleted from the system.");
+        }
     }
 }
