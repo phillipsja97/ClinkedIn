@@ -21,7 +21,7 @@ namespace ClinkedIn.Controllers
             var allClinkers = _repository.getAllClinkers();
             return Ok(allClinkers);
         }
-
+                     
         [HttpPost]
         public IActionResult AddClinker(Clinker clinkerToAdd)
         {
@@ -63,23 +63,6 @@ namespace ClinkedIn.Controllers
             return Ok(interestedClinkers);
         }
         
-        /*[HttpPost("{id}/friends")]
-        public IActionResult AddFriend(int id, Clinker friendToAdd)
-        {
-            var clinkerToUpdate = _repository.GetById(id);
-            if (!clinkerToUpdate.Friends.Any(c => c.Name == friendToAdd.Name))
-            {
-                _repository.AddClinkerFriend(id, friendToAdd);
-            }
-            else
-            {
-                return BadRequest($"Already friends with {friendToAdd.Name}");
-            }
-
-            var updatedClinker = _repository.GetById(id);
-            return Ok(updatedClinker);
-        }*/
-
         [HttpPost("{id}/{friendToAddId}")]
         public IActionResult AddFriend(int id, int friendToAddId)
         {
@@ -98,49 +81,22 @@ namespace ClinkedIn.Controllers
             return Ok(updatedClinker);
         }
 
-        [HttpPost("{id}/enemies")]
-        public IActionResult AddEnemies(int id, Clinker enemyToAdd)
+        [HttpPost("{id}/{enemyToAddId}")]
+        public IActionResult AddEnemy(int id, int enemyToAddId)
         {
-            var clinkerToUpdate = _repository.GetById(id);
-            if (!clinkerToUpdate.Enemies.Any(c => c.Name == enemyToAdd.Name))
+            var clinkerToGiveEnemy = _repository.GetById(id);
+            var enemyToAdd = _repository.GetById(enemyToAddId);
+            if (!clinkerToGiveEnemy.Enemies.Any(c => c.Name == enemyToAdd.Name))
             {
                 _repository.AddClinkerEnemy(id, enemyToAdd);
             }
             else
             {
-                return BadRequest($"Already enemies with {enemyToAdd.Name}.");
+                return BadRequest($"Already enemies with {enemyToAdd.Name}");
             }
 
             var updatedClinker = _repository.GetById(id);
             return Ok(updatedClinker);
-        }
-
-        [HttpGet("{id}/sentence")]
-        public IActionResult ClinkerSentence(int id)
-        {
-            var clinkerSentence = _repository.SentenceCountdown(id);
-            return Ok(clinkerSentence);
-        }
-
-        [HttpPut("{id}")]
-        public IActionResult UpdateClinker(int id, Clinker clinker)
-        {
-            var clinkerToUpdate = _repository.GetById(id);
-
-            if (clinkerToUpdate == null)
-            {
-                return NotFound("Clinker doesn't exist");
-            }
-
-            clinkerToUpdate.Name = clinker.Name;
-            clinkerToUpdate.Age = clinker.Age;
-            clinkerToUpdate.LockupReason = clinker.LockupReason;
-            clinkerToUpdate.Interests = clinker.Interests;
-            clinkerToUpdate.Services = clinker.Services;
-            clinkerToUpdate.Friends = clinker.Friends;
-            clinkerToUpdate.Enemies = clinker.Enemies;
-
-            return Ok(clinkerToUpdate);
         }
     }
 }
