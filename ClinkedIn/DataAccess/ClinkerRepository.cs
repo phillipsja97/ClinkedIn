@@ -15,7 +15,8 @@ namespace ClinkedIn.DataAccess
                 Age = 33,
                 LockupReason = "Stealing TVs",
                 Interests = new List<string>{ "Coding", "Stealing TVs"},
-                Services = new List<Service>{ new Service { Title = "Shive Maker", Cost = "bar of soap"} }
+                Services = new List<Service>{ new Service { Title = "Shive Maker", Cost = "bar of soap"} },
+                Sentence = new DateTime(2021,12,28)
             },
             new Clinker {
                 Id = 2,
@@ -23,7 +24,8 @@ namespace ClinkedIn.DataAccess
                 Age = 33,
                 LockupReason = "Pepper Spraying People",
                 Interests = new List<string>{ "Coding", "Road Rage"},
-                Services = new List<Service>{ new Service { Title = "Instructor", Cost = "arm + leg"} }
+                Services = new List<Service>{ new Service { Title = "Instructor", Cost = "arm + leg"} },
+                Sentence = new DateTime(2030,06,10)
             },
             new Clinker {
                 Id = 3,
@@ -31,7 +33,8 @@ namespace ClinkedIn.DataAccess
                 Age = 33,
                 LockupReason = "Bank Heist",
                 Interests = new List<string>{ "Robbin' Banks",},
-                Services = new List<Service>{ new Service { Title = "Chef", Cost = "ingredients"} }
+                Services = new List<Service>{ new Service { Title = "Chef", Cost = "ingredients"} },
+                Sentence = new DateTime(2025,10,04)
             }
         };
 
@@ -73,6 +76,16 @@ namespace ClinkedIn.DataAccess
         public void AddClinkerEnemy(int id, Clinker enemyToAdd)
         {
             _clinkers[id - 1].Enemies.Add(enemyToAdd);
+        }
+
+        public string SentenceCountdown(int id)
+        {
+            var clinkerSentenced = GetById(id);
+            DateTime daysLeft = clinkerSentenced.Sentence;
+            DateTime startDate = DateTime.Now;
+
+            TimeSpan sentenceLeft = daysLeft - startDate;
+            return string.Format($"{clinkerSentenced.Name} has {sentenceLeft.Days} Days Left In Sentence");
         }
     }
 }
