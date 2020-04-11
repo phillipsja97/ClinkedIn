@@ -99,5 +99,17 @@ namespace ClinkedIn.DataAccess
             var serviceToDelete = selectedClinker.Services.Find(s => s.Title == service);
             _clinkers[id - 1].Services.Remove(serviceToDelete);
         }
+
+        public void DeleteFriend(int id, int friendId)
+        {
+            var friendToDelete = GetById(friendId);
+            _clinkers[id - 1].Friends.Remove(friendToDelete);
+        }
+
+        public void deleteEnemy(int id, int enemyId)
+        {
+            var enemyToDelete = GetById(enemyId);
+            _clinkers[id - 1].Enemies.Remove(enemyToDelete);
+        }
     }
 }

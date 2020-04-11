@@ -114,19 +114,20 @@ namespace ClinkedIn.Controllers
             return Ok(updatedClinker);
         }
 
-        [HttpDelete("{id}/enemy/{enemy}")]
-        public IActionResult DeleteAnEnemy(int id, Clinker clinker)
+        [HttpDelete("{id}/enemy/{enemyId}")]
+        public IActionResult DeleteAnEnemy(int id, int enemyId)
         {
-            var enemyToDelete = _repository.GetById(id);
-            if (enemyToDelete.Enemies.Any(c => c.Id == enemyToDelete.Id))
+            var clinkerRemovingEnemy = _repository.GetById(id);
+            var enemyBeingRemoved = _repository.GetById(enemyId);
+            if (clinkerRemovingEnemy.Enemies.Contains(enemyBeingRemoved))
             {
-                _repository.deleteEnemy(id, clinker);
+                _repository.deleteEnemy(id, enemyId);
             }
             else
             {
-                return BadRequest("That enemy doesn't exist");
+                return BadRequest($"{enemyBeingRemoved.Name} couldn't be found in {clinkerRemovingEnemy.Name}'s enemy list.");
             }
-            return Ok("That enemy has been deleted");
+            return Ok($"Removed {enemyBeingRemoved.Name} from {clinkerRemovingEnemy.Name}'s enemy list.");
         }
 
         [HttpGet("{id}/sentence")]
