@@ -15,6 +15,13 @@ namespace ClinkedIn.Controllers
     {
         ClinkerRepository _repository = new ClinkerRepository();
 
+        [HttpGet]
+        public IActionResult GetAllClinkers()
+        {
+            var allClinkers = _repository.getAllClinkers();
+            return Ok(allClinkers);
+        }
+
         [HttpPost]
         public IActionResult AddClinker(Clinker clinkerToAdd)
         {
