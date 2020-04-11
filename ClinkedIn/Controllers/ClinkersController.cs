@@ -114,5 +114,12 @@ namespace ClinkedIn.Controllers
             var updatedClinker = _repository.GetById(id);
             return Ok(updatedClinker);
         }
+
+        [HttpGet("{id}/sentence")]
+        public IActionResult ClinkerSentence(int id)
+        {
+            var clinkerSentence = _repository.SentenceCountdown(id);
+            return Ok(clinkerSentence);
+        }
     }
 }
