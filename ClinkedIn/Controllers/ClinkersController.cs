@@ -62,7 +62,7 @@ namespace ClinkedIn.Controllers
             var interestedClinkers = _repository.GetClinkersByInterest(interest);
             return Ok(interestedClinkers);
         }
-        
+
         /*[HttpPost("{id}/friends")]
         public IActionResult AddFriend(int id, Clinker friendToAdd)
         {
@@ -141,6 +141,20 @@ namespace ClinkedIn.Controllers
             clinkerToUpdate.Enemies = clinker.Enemies;
 
             return Ok(clinkerToUpdate);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteClinker(int id)
+        {
+            var clinkerToDelete = _repository.GetById(id);
+
+            if (clinkerToDelete == null)
+            {
+                return NotFound("Can't delete a clinker that doesn't exist.");
+            }
+
+            _repository.deleteClinker(clinkerToDelete);
+            return Ok($"That clinker has been deleted from the system.");
         }
     }
 }
