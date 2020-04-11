@@ -16,6 +16,22 @@ namespace ClinkedIn.DataAccess
                 LockupReason = "Stealing TVs",
                 Interests = new List<string>{ "Coding", "Stealing TVs"},
                 Services = new List<Service>{ new Service { Title = "Shive Maker", Cost = "bar of soap"} }
+            },
+            new Clinker {
+                Id = 2,
+                Name = "Martin",
+                Age = 33,
+                LockupReason = "Pepper Spraying People",
+                Interests = new List<string>{ "Coding", "Road Rage"},
+                Services = new List<Service>{ new Service { Title = "Instructor", Cost = "arm + leg"} }
+            },
+            new Clinker {
+                Id = 3,
+                Name = "Jameka",
+                Age = 33,
+                LockupReason = "Bank Heist",
+                Interests = new List<string>{ "Robbin' Banks",},
+                Services = new List<Service>{ new Service { Title = "Chef", Cost = "ingredients"} }
             }
         };
 

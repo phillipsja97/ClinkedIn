@@ -10,7 +10,7 @@ using ClinkedIn.Models;
 namespace ClinkedIn.Controllers
 {
     [Route("api/clinkers")]
-    [ApiController]    
+    [ApiController]
     public class ClinkersController : ControllerBase
     {
         ClinkerRepository _repository = new ClinkerRepository();
@@ -39,6 +39,16 @@ namespace ClinkedIn.Controllers
             return Ok(updatedClinker);
         }
 
+        [HttpGet("{id}/friendsOfFriends")]
+        public IActionResult GetFriendsOfFriends(int id)
+        {
+            var clinkersFriendsToGet = _repository.GetById(id);
+            var clinkersFriends = new List<Clinker>();
+            clinkersFriends.AddRange(clinkersFriendsToGet.Friends);
+            var clinkersFriendsOfFriends = clinkersFriends.Select(clinker => clinker.Friends);
+            return Ok(clinkersFriendsOfFriends);
+        }
+
         [HttpGet("interests/{interest}")]
         public IActionResult GetClinkersByInterest(string interest)
         {
@@ -46,11 +56,29 @@ namespace ClinkedIn.Controllers
             return Ok(interestedClinkers);
         }
         
-        [HttpPost("{id}/friends")]
+        /*[HttpPost("{id}/friends")]
         public IActionResult AddFriend(int id, Clinker friendToAdd)
         {
             var clinkerToUpdate = _repository.GetById(id);
             if (!clinkerToUpdate.Friends.Any(c => c.Name == friendToAdd.Name))
+            {
+                _repository.AddClinkerFriend(id, friendToAdd);
+            }
+            else
+            {
+                return BadRequest($"Already friends with {friendToAdd.Name}");
+            }
+
+            var updatedClinker = _repository.GetById(id);
+            return Ok(updatedClinker);
+        }*/
+
+        [HttpPost("{id}/{friendToAddId}")]
+        public IActionResult AddFriend(int id, int friendToAddId)
+        {
+            var clinkerToGiveFriend = _repository.GetById(id);
+            var friendToAdd = _repository.GetById(friendToAddId);
+            if (!clinkerToGiveFriend.Friends.Any(c => c.Name == friendToAdd.Name))
             {
                 _repository.AddClinkerFriend(id, friendToAdd);
             }
